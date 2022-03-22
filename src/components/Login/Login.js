@@ -16,18 +16,18 @@ const reducer = (state, action) => {
     case "EMAIL_INPUT":
       return {
         ...state,
-        email: action.payload,
+        enteredEmail: action.payload,
         emailIsValid: action.payload.includes("@"),
       };
     case "EMAIL_BLUR":
       return {
-        email: state.email,
-        emailIsValid: state.email.includes("@"),
+        enteredEmail: state.enteredEmail,
+        emailIsValid: state.enteredEmail.includes("@"),
       };
     case "PASSWORD_INPUT":
       return {
         ...state,
-        password: action.payload,
+        enteredPassword: action.payload,
         passwordIsValid: action.payload.trim().length > 6,
       };
 
