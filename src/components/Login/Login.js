@@ -43,9 +43,6 @@ const reducer = (state, action) => {
 
 const Login = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
