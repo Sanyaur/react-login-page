@@ -4,6 +4,7 @@ import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
 
+// starter states
 const initialState = {
   enteredEmail: "",
   emailIsValid: null,
@@ -12,9 +13,8 @@ const initialState = {
   formIsValid: "",
 };
 
+// function to update the states, based on the actions from the user
 const reducer = (state, action) => {
-  console.log(state);
-  console.log(action);
   switch (action.type) {
     case "EMAIL":
       return {
@@ -52,6 +52,7 @@ const reducer = (state, action) => {
 const Login = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // state from useReducer destructured for easier refactoring experience from useState
   const {
     enteredEmail,
     emailIsValid,
@@ -60,22 +61,16 @@ const Login = (props) => {
     formIsValid,
   } = state;
 
-  // const [enteredEmail, setEnteredEmail] = useState("");
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState("");
-  // const [passwordIsValid, setPasswordIsValid] = useState();
-  // const [formIsValid, setFormIsValid] = useState(false);
-
   useEffect(() => {
     const timedValidation = setTimeout(() => {
       console.log("validating input field");
-      emailIsValid &&
-        passwordIsValid &&
-        dispatch({
-          type: "FORM_VALIDATION",
-          payload: emailIsValid && passwordIsValid,
-        });
-    }, 500);
+
+      // dispatch function fires every time when each of the validation switches "true/false" state
+      dispatch({
+        type: "FORM_VALIDATION",
+        payload: emailIsValid && passwordIsValid,
+      });
+    }, 200);
 
     return () => {
       console.log("stopping validation until typing is done");
@@ -86,22 +81,18 @@ const Login = (props) => {
 
   const emailChangeHandler = (event) => {
     dispatch({ type: "EMAIL", payload: event.target.value });
-    // setEnteredEmail(event.target.value);
   };
 
   const passwordChangeHandler = (event) => {
     dispatch({ type: "PASSWORD", payload: event.target.value });
-    // setEnteredPassword(event.target.value);
   };
 
   const validateEmailHandler = () => {
     dispatch({ type: "EMAIL_BLUR" });
-    // setEmailIsValid(enteredEmail.includes("@"));
   };
 
   const validatePasswordHandler = () => {
     dispatch({ type: "PASSWORD_BLUR" });
-    // setPasswordIsValid(enteredPassword.trim().length > 6);
   };
 
   const submitHandler = (event) => {
