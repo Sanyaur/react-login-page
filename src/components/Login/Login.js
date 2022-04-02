@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -96,15 +96,25 @@ const Login = (props) => {
     dispatch({ type: "PASSWORD_BLUR" });
   };
 
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+    if (formIsValid) {
+      props.onLogin(enteredEmail, enteredPassword);
+    } else if (!emailIsValid) {
+      emailInputRef.current.focus();
+    } else {
+      passwordInputRef.current.focus();
+    }
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <Input
+          ref={emailInputRef}
           label='E-mail'
           id='email'
           type='email'
@@ -114,6 +124,7 @@ const Login = (props) => {
           isValid={emailIsValid}
         />
         <Input
+          ref={passwordInputRef}
           label='Password'
           id='password'
           type='password'
@@ -151,7 +162,7 @@ const Login = (props) => {
           />
         </div> */}
         <div className={classes.actions}>
-          <Button type='submit' className={classes.btn} disabled={!formIsValid}>
+          <Button type='submit' className={classes.btn}>
             Login
           </Button>
         </div>
